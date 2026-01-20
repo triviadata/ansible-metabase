@@ -66,6 +66,26 @@ metabase_databases:
 Note: these can be configured or changed later within the app, so it's not essential.
 
 
+Extra environment variables
+---------------------------
+
+You can pass additional environment variables to Metabase using the `metabase_extra_env` dictionary:
+
+```
+metabase_extra_env:
+  MB_DB_CONNECTION_URI: jdbc:postgresql://some.pg.server:5432/metabase?user=metabase&password=metapass&ssl=true&sslmode=require&sslcert=/opt/metabase/server.pem&sslkey=/opt/metabase/server.key
+  MB_JETTY_SSL_PORT: 3000
+  MB_JETTY_SSL: "true"
+  MB_JETTY_SSL_CLIENT_AUTH: "false"
+  MB_JETTY_SSL_KEYSTORE: "/etc/pki/java/keystore.jks"
+  MB_JETTY_SSL_KEYSTORE_PASSWORD: "changeit"
+  MB_JETTY_SSL_TRUSTSTORE: "/etc/pki/java/truststore.jks"
+  MB_JETTY_SSL_TRUSTSTORE_PASSWORD: "changeit"
+```
+
+See the [Metabase environment variables documentation](https://www.metabase.com/docs/latest/configuring-metabase/environment-variables) for all available options.
+
+
 Example playbook
 ----------------
 

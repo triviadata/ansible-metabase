@@ -1,12 +1,12 @@
 ---
 
-- name: create group
-  group:
+- name: Create group
+  ansible.builtin.group:
     name: "{{ metabase_group }}"
-  become: yes
+  become: true
 
-- name: create metabase user
-  user:
+- name: Create user
+  ansible.builtin.user:
     name: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
-  become: yes
+  become: true

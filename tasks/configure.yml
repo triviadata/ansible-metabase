@@ -1,7 +1,7 @@
 ---
 
-- name: ensure metabase has started (this can take a while...)
-  uri:
+- name: Ensure metabase has started (this can take a while...)
+  ansible.builtin.uri:
     url: "http://localhost:{{ metabase_port }}/api/session/properties"
     status_code: 200
   register: metabase_api_session
@@ -9,8 +9,8 @@
   retries: 10
   delay: 6
 
-- name: submit initial configuration
-  uri:
+- name: Submit initial configuration
+  ansible.builtin.uri:
     url: "http://localhost:{{ metabase_port }}/api/setup"
     method: POST
     body:
@@ -31,8 +31,8 @@
   register: metabase_api_setup
   when: metabase_api_session.json["setup-token"]
 
-- name: create initial databases
-  include_tasks: add_database.yml
+- name: Create initial databases
+  ansible.builtin.include_tasks: add_database.yml
   vars:
     metabase_session: "{{ metabase_api_setup }}"
   loop: "{{ metabase_databases }}"

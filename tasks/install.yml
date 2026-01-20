@@ -1,57 +1,57 @@
 ---
 
-- name: create log dir
-  file:
+- name: Create log dir
+  ansible.builtin.file:
     path: "{{ metabase_log_dir }}"
     state: directory
-    mode: 0744
+    mode: "0744"
     owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
-  become: yes
+  become: true
 
-- name: create app dir
-  file:
+- name: Create app dir
+  ansible.builtin.file:
     path: "{{ metabase_app_dir }}/{{ metabase_version }}"
     state: directory
-    mode: 0750
+    mode: "0750"
     owner: root
     group: "{{ metabase_group }}"
-  become: yes
+  become: true
 
-- name: download metabase
-  get_url:
+- name: Download metabase
+  ansible.builtin.get_url:
     url: "https://downloads.metabase.com/{{ metabase_version }}/metabase.jar"
     dest: "{{ metabase_jarfile }}"
     owner: root
     group: "{{ metabase_group }}"
-    mode: 0750
-  become: yes
+    mode: "0750"
+  become: true
 
-- name: add logging config
-  template:
+- name: Add logging config
+  ansible.builtin.template:
     src: log4j.j2
     dest: "{{ metabase_working_directory }}/log4j.properties"
     owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
-    mode: 0640
-  become: yes
+    mode: "0640"
+  become: true
 
-- name: add metabase service
-  template:
+- name: Add metabase service
+  ansible.builtin.template:
     src: metabase_service.j2
     dest: /etc/systemd/system/metabase.service
-    mode: 0750
-  become: yes
+    mode: "0750"
+  become: true
   notify:
     - reload systemd
     - restart metabase
     - remove old versions
 
-- name: enable metabase service
-  service:
+- name: Enable metabase service
+  ansible.builtin.service:
     name: metabase
     state: started
-    enabled: yes
+    enabled: true
 
-- name: flush handlers
-  meta: flush_handlers
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

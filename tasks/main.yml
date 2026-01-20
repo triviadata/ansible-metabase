@@ -1,10 +1,9 @@
 ---
+- name: Add metabase user
+  ansible.builtin.include_tasks: user.yml
 
-- name: add metabase user
-  include_tasks: user.yml
+- name: Install metabase
+  ansible.builtin.include_tasks: install.yml
 
-- name: install metabase
-  include_tasks: install.yml
-
-- name: configure metabase
-  include_tasks: configure.yml
+- name: Configure metabase
+  ansible.builtin.include_tasks: configure.yml

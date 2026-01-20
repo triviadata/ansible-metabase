@@ -10,3 +10,6 @@ Environment="MB_DB_USER={{ metabase_db_user }}"
 Environment="MB_DB_PASS={{ metabase_db_pass }}"
 Environment="MB_DB_HOST={{ metabase_db_host }}"
 {% endif %}
+{% for key, value in (metabase_extra_env | default({})).items() %}
+Environment="{{ key }}={{ value }}"
+{% endfor %}

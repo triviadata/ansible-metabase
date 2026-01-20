@@ -1,7 +1,7 @@
 ---
 
-- name: authenticate to api
-  uri:
+- name: Authenticate to API
+  ansible.builtin.uri:
     url: "http://localhost:{{ metabase_port }}/api/session"
     method: POST
     body:
@@ -15,8 +15,8 @@
   register: metabase_session
   when: metabase_session is undefined
 
-- name: add database # warning: this API endpoint is not idempotent!
-  uri:
+- name: Add database  # warning: this API endpoint is not idempotent!
+  ansible.builtin.uri:
     url: "http://localhost:{{ metabase_port }}/api/database"
     method: POST
     body:

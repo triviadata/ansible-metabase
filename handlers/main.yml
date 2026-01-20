@@ -1,16 +1,15 @@
 ---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
 
-- name: reload systemd
-  systemd:
-    daemon_reload: yes
-  become: yes
-
-- name: restart metabase
-  service:
-    name: metabase
+- name: Restart metabase
+  ansible.builtin.systemd:
     state: restarted
-  become: yes
+    daemon_reload: true
+    name: metabase
 
-- name: remove old versions
-  include_tasks: upgrade_cleanup.yml
+- name: Remove old versions
+  ansible.builtin.include_tasks: upgrade_cleanup.yml
   when: metabase_upgrade_cleanup

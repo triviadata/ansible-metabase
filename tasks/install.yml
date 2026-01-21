@@ -11,10 +11,10 @@
 
 - name: Create app dir
   ansible.builtin.file:
-    path: "{{ metabase_app_dir }}/{{ metabase_version }}"
+    path: "{{ metabase_app_dir }}"
     state: directory
     mode: "0750"
-    owner: root
+    owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
   become: true
 
@@ -22,15 +22,15 @@
   ansible.builtin.get_url:
     url: "https://downloads.metabase.com/{{ metabase_version }}/metabase.jar"
     dest: "{{ metabase_jarfile }}"
-    owner: root
+    owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
     mode: "0750"
   become: true
 
 - name: Setup metabase logging configuration file
   ansible.builtin.template:
-    src: log4j2.xml.j2
-    dest: "{{ metabase_log4j2_file }}"
+    src: log4j.properties.j2
+    dest: "{{ metabase_log4jprop_file }}"
     owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
     mode: "0644"
@@ -44,9 +44,8 @@
     mode: "0750"
   become: true
   notify:
-    - reload systemd
-    - restart metabase
-    - remove old versions
+    - Reload systemd
+    - Restart metabase
 
 - name: Enable metabase service
   ansible.builtin.service:

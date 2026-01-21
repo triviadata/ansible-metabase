@@ -9,7 +9,3 @@
     state: restarted
     daemon_reload: true
     name: metabase
-
-- name: Remove old versions
-  ansible.builtin.include_tasks: upgrade_cleanup.yml
-  when: metabase_upgrade_cleanup

@@ -22,14 +22,17 @@
         password: "{{ metabase_admin.password }}"
       prefs:
         site_name: "{{ metabase_prefs.site_name }}"
-        allow_tracking: "{{ metabase_prefs.allow_tracking }}"
     body_format: json
-    status_code: 200
+    status_code: 200, 403
+    return_content: true
     headers:
       Accept: "application/json"
       Content-Type: "application/json"
   register: metabase_api_setup
-  when: metabase_api_session.json["setup-token"]
+  failed_when: false
+  when:
+    - metabase_api_session is defined
+    - metabase_api_session.json["setup-token"]
 
 - name: Create initial databases
   ansible.builtin.include_tasks: add_database.yml
@@ -38,4 +41,7 @@
   loop: "{{ metabase_databases }}"
   loop_control:
     loop_var: database_item
-  when: metabase_api_session.json["setup-token"]
+  when:
+    - metabase_api_session is defined
+    - metabase_api_session.json["setup-token"]
+    - "'The /api/setup route can only be used to create the first user' not in (metabase_api_setup.content | default(''))"

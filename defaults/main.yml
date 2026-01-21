@@ -1,18 +1,16 @@
 ---
-
 metabase_version: v0.41.5
-metabase_upgrade_cleanup: true
 
 metabase_user: metabase
 metabase_group: metabase
 
-metabase_app_dir: /opt/metabase
-metabase_jarfile: "{{ metabase_app_dir }}/{{ metabase_version }}/metabase.jar"
+metabase_app_dir: /opt/metabase/{{ metabase_version }}
+metabase_jarfile: "{{ metabase_app_dir }}/metabase.jar"
 metabase_jvm_args: "-Djava.net.preferIPv4Stack=True"
 
 metabase_log_dir: /var/log/metabase
 metabase_log_file: "{{ metabase_log_dir }}/metabase.log"
-metabase_log4j2_file: "{{ metabase_app_dir }}/log4j2.xml"
+metabase_log4jprop_file: "{{ metabase_app_dir }}/log4j.properties"
 
 metabase_host: localhost
 metabase_port: 3000
@@ -27,7 +25,6 @@ metabase_databases: []
 
 metabase_prefs:
   site_name: Metabase
-  allow_tracking: false
 
 use_own_database: true
 metabase_db: metabase

@@ -10,7 +10,7 @@ metabase_jvm_args: "-Djava.net.preferIPv4Stack=True"
 
 metabase_log_dir: /var/log/metabase
 metabase_log_file: "{{ metabase_log_dir }}/metabase.log"
-metabase_log4jprop_file: "{{ metabase_app_dir }}/log4j.properties"
+metabase_log4j2_file: "{{ metabase_app_dir }}/log4j2.xml"
 
 metabase_host: localhost
 metabase_port: 3000

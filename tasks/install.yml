@@ -29,8 +29,8 @@
 
 - name: Setup metabase logging configuration file
   ansible.builtin.template:
-    src: log4j.properties.j2
-    dest: "{{ metabase_log4jprop_file }}"
+    src: log4j2.xml.j2
+    dest: "{{ metabase_log4j2_file }}"
     owner: "{{ metabase_user }}"
     group: "{{ metabase_group }}"
     mode: "0644"

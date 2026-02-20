@@ -41,7 +41,7 @@
   ansible.builtin.template:
     src: metabase_service.j2
     dest: /etc/systemd/system/metabase.service
-    mode: "0750"
+    mode: "0644"
   become: true
   notify:
     - Reload systemd
